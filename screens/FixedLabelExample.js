@@ -12,7 +12,7 @@ const FixedLabelExample = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Cadastro</Text>
+      <Text style={styles.title}>Cadastros</Text>
       
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Nome</Text>

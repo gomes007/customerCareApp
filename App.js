@@ -1,149 +1,276 @@
-import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import 'react-native-gesture-handler';
+import { Button, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-import FixedLabelExample from './screens/FixedLabelExample';
-import HomeScreen from './screens/HomeScreen';
-import MyComponent from './screens/MyComponent';
-import Ticket from './screens/Ticket';
-
-const Stack = createNativeStackNavigator();
-const Drawer = createDrawerNavigator();
-const Tab = createBottomTabNavigator();
-
-function HomeStack() {
+// Telas do Bottom Tab
+function HomeScreen({ navigation }) {
   return (
-    <Stack.Navigator>
-      <Stack.Screen 
-        name="Home" 
-        component={HomeScreen} 
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen 
-        name="Cadastro" 
-        component={FixedLabelExample}
-        options={({ navigation }) => ({
-          title: 'Cadastro',
-          headerLeft: () => (
-            <Ionicons
-              name="arrow-back"
-              size={24}
-              onPress={() => navigation.goBack()}
-              style={{ marginLeft: 10 }}
-            />
-          ),
-        })}
-      />
-    </Stack.Navigator>
+    <View>
+      <Text>Home Screen</Text>
+      <Button title="Go to Details" onPress={() => navigation.navigate('HomeDetails')} />
+      <Button title="Go to Settings" onPress={() => navigation.navigate('SettingsTab')} />
+      <Button title="Go to Profile" onPress={() => navigation.navigate('ProfileTab')} />
+    </View>
   );
 }
 
-function HomeTabs() {
+function SettingsScreen({ navigation }) {
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
-          let iconName;
-          if (route.name === 'HomeStack') {
-            iconName = 'home';
-          } else if (route.name === 'Cadastro') {
-            iconName = 'add-circle';
-          }
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: 'tomato',
-        inactiveTintColor: 'gray',
-      }}
-    >
-      <Tab.Screen name="HomeStack" component={HomeStack} options={{ title: 'Home' }} />
-      <Tab.Screen name="Cadastro" component={FixedLabelExample} options={{ title: 'Cadastro' }} />
+    <View>
+      <Text>Settings Screen</Text>
+    </View>
+  );
+}
+
+function ProfileScreen({ navigation }) {
+  return (
+    <View>
+      <Text>Profile Screen</Text>
+    </View>
+  );
+}
+
+function DetailsScreen({ navigation }) {
+  return (
+    <View>
+      <Text>Details Screen</Text>
+    </View>
+  );
+}
+
+// Telas do Drawer
+function NotificationsScreen({ navigation }) {
+  return (
+    <View>
+      <Text>Notifications Screen</Text>
+    </View>
+  );
+}
+
+function AboutScreen({ navigation }) {
+  return (
+    <View>
+      <Text>About Screen</Text>
+    </View>
+  );
+}
+
+function ContactScreen({ navigation }) {
+  return (
+    <View>
+      <Text>Contact Screen</Text>
+    </View>
+  );
+}
+
+// Stack Navigators para cada grupo de telas
+const HomeStack = createStackNavigator();
+const SettingsStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
+const NotificationsStack = createStackNavigator();
+const AboutStack = createStackNavigator();
+const ContactStack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+const MainStack = createStackNavigator();
+
+function HomeStackScreen({ navigation }) {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen 
+        name="HomeMain" 
+        component={HomeScreen} 
+        options={{
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <Icon name="menu" size={25} style={{ marginLeft: 10 }} />
+            </TouchableOpacity>
+          ),
+          headerTitle: () => null,  // Oculta o título "Home"
+        }}
+      />
+      <HomeStack.Screen 
+        name="HomeDetails" 
+        component={DetailsScreen} 
+        options={{
+          headerTitle: 'Details',
+          headerLeft: ({ navigation }) => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Icon name="arrow-back" size={25} style={{ marginLeft: 10 }} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+    </HomeStack.Navigator>
+  );
+}
+
+function SettingsStackScreen({ navigation }) {
+  return (
+    <SettingsStack.Navigator>
+      <SettingsStack.Screen 
+        name="SettingsMain" 
+        component={SettingsScreen} 
+        options={{
+          headerTitle: 'Settings',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('HomeMain')}>
+              <Icon name="arrow-back" size={25} style={{ marginLeft: 10 }} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+    </SettingsStack.Navigator>
+  );
+}
+
+function ProfileStackScreen({ navigation }) {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen 
+        name="ProfileMain" 
+        component={ProfileScreen} 
+        options={{
+          headerTitle: 'Profile',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('HomeMain')}>
+              <Icon name="arrow-back" size={25} style={{ marginLeft: 10 }} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+    </ProfileStack.Navigator>
+  );
+}
+
+function NotificationsStackScreen({ navigation }) {
+  return (
+    <NotificationsStack.Navigator>
+      <NotificationsStack.Screen 
+        name="NotificationsMain" 
+        component={NotificationsScreen} 
+        options={{
+          headerTitle: 'Notifications',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('HomeMain')}>
+              <Icon name="arrow-back" size={25} style={{ marginLeft: 10 }} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+    </NotificationsStack.Navigator>
+  );
+}
+
+function AboutStackScreen({ navigation }) {
+  return (
+    <AboutStack.Navigator>
+      <AboutStack.Screen 
+        name="AboutMain" 
+        component={AboutScreen} 
+        options={{
+          headerTitle: 'About',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('HomeMain')}>
+              <Icon name="arrow-back" size={25} style={{ marginLeft: 10 }} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+    </AboutStack.Navigator>
+  );
+}
+
+function ContactStackScreen({ navigation }) {
+  return (
+    <ContactStack.Navigator>
+      <ContactStack.Screen 
+        name="ContactMain" 
+        component={ContactScreen} 
+        options={{
+          headerTitle: 'Contact',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('HomeMain')}>
+              <Icon name="arrow-back" size={25} style={{ marginLeft: 10 }} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+    </ContactStack.Navigator>
+  );
+}
+
+// Bottom Tabs Navigator para navegação de abas
+function BottomTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen 
+        name="HomeTab" 
+        component={HomeStackScreen} 
+        options={{ headerShown: false }} // Oculta o cabeçalho da aba, controlado pelo Stack
+      />
+      <Tab.Screen 
+        name="SettingsTab" 
+        component={SettingsStackScreen} 
+        options={{ headerShown: false }} // Oculta o cabeçalho da aba, controlado pelo Stack
+      />
+      <Tab.Screen 
+        name="ProfileTab" 
+        component={ProfileStackScreen} 
+        options={{ headerShown: false }} // Oculta o cabeçalho da aba, controlado pelo Stack
+      />
     </Tab.Navigator>
   );
 }
 
-function DrawerNavigator() {
+// Drawer Navigator para navegação de drawer
+function DrawerScreens() {
   return (
-    <Drawer.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: "#351401",
-        },
-        headerTintColor: "#fff",
-        sceneContainerStyle: {
-          backgroundColor: "#dad1d1",
-        },
-        drawerContentStyle: {
-          backgroundColor: "#351401",
-        },
-        drawerActiveTintColor: "#351401",
-        drawerInactiveTintColor: "white",
-        drawerActiveBackgroundColor: "#e4baa1",
-      }}
+    <Drawer.Navigator 
+      initialRouteName="HomeDrawer"
+      screenOptions={{ headerShown: false }}  // Oculta o cabeçalho do Drawer
     >
-      <Drawer.Screen
-        name="HomeDrawer"
-        component={HomeTabs}
-        options={{
-          title: "Home",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
-          ),
-        }}
+      <Drawer.Screen 
+        name="HomeDrawer" 
+        component={BottomTabs}
+        options={{ drawerLabel: 'Home' }} // Oculta o item do drawer
       />
-      <Drawer.Screen
-        name="Tickets"
-        component={Ticket}
-        options={{
-          title: "Tickets",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="ticket" size={size} color={color} />
-          ),
-        }}
+      <Drawer.Screen 
+        name="NotificationsDrawer" 
+        component={NotificationsStackScreen} 
+        options={{ drawerLabel: 'Notifications' }}
       />
-      <Drawer.Screen
-        name="MyComponent"
-        component={MyComponent}
-        options={{
-          title: "MyComponent",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="star" size={size} color={color} />
-          ),
-        }}
+      <Drawer.Screen 
+        name="AboutDrawer" 
+        component={AboutStackScreen} 
+        options={{ drawerLabel: 'About' }}
+      />
+      <Drawer.Screen 
+        name="ContactDrawer" 
+        component={ContactStackScreen} 
+        options={{ drawerLabel: 'Contact' }}
       />
     </Drawer.Navigator>
   );
 }
 
-export default function App() {
+
+function App() {
   return (
-    <>
-      <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: "#351401",
-            },
-            headerTintColor: "#fff",
-            contentStyle: {
-              backgroundColor: "#dad1d1",
-            },
-          }}
-        >
-          <Stack.Screen
-            name="Drawer"
-            component={DrawerNavigator}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </>
+    <NavigationContainer>
+      <MainStack.Navigator initialRouteName="Drawer">
+        <MainStack.Screen 
+          name="Drawer" 
+          component={DrawerScreens} 
+          options={{ headerShown: false }} 
+        />
+      </MainStack.Navigator>
+    </NavigationContainer>
   );
 }
+
+export default App;
