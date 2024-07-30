@@ -1,15 +1,16 @@
 import { Picker } from '@react-native-picker/picker';
 import * as DocumentPicker from 'expo-document-picker';
 import React, { useState } from 'react';
-import { Button, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { theme } from '../navigation/theme';
 
 const Ticket = () => {
   const [ticket, setTicket] = useState({
     contactName: '',
     subject: '',
     description: '',
-    openingDate: '',
-    dueDate: '',
+    openingDate: new Date(),
+    dueDate: new Date(),
     classification: '',
     priority: '',
     status: '',
@@ -18,6 +19,16 @@ const Ticket = () => {
     customerId: '',
     files: [],
   });
+
+  const [openOpeningDatePicker, setOpenOpeningDatePicker] = useState(false);
+  const [openDueDatePicker, setOpenDueDatePicker] = useState(false);
+
+  const handleDateChange = (field, selectedDate) => {
+    setTicket(prevState => ({
+      ...prevState,
+      [field]: selectedDate,
+    }));
+  };
 
   const handleChange = (name, value) => {
     setTicket({ ...ticket, [name]: value });
@@ -36,7 +47,6 @@ const Ticket = () => {
 
   const handleCadastro = () => {
     console.log('Dados do Ticket:', ticket);
-    // Adicione aqui a lógica de envio para o backend
   };
 
   return (
@@ -50,6 +60,7 @@ const Ticket = () => {
           value={ticket.contactName}
           onChangeText={(text) => handleChange('contactName', text)}
           placeholder="Digite o nome do contato"
+          placeholderTextColor="#888"
         />
       </View>
 
@@ -60,19 +71,24 @@ const Ticket = () => {
           value={ticket.subject}
           onChangeText={(text) => handleChange('subject', text)}
           placeholder="Digite o assunto"
+          placeholderTextColor="#888"
         />
       </View>
 
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Descrição</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, styles.textArea]}
           value={ticket.description}
           onChangeText={(text) => handleChange('description', text)}
           placeholder="Digite a descrição"
+          placeholderTextColor="#888"
           multiline
+          numberOfLines={4}
+          textAlignVertical="top"
         />
       </View>
+
 
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Data de Abertura</Text>
@@ -81,6 +97,7 @@ const Ticket = () => {
           value={ticket.openingDate}
           onChangeText={(text) => handleChange('openingDate', text)}
           placeholder="YYYY-MM-DD"
+          placeholderTextColor="#888"
         />
       </View>
 
@@ -91,6 +108,7 @@ const Ticket = () => {
           value={ticket.dueDate}
           onChangeText={(text) => handleChange('dueDate', text)}
           placeholder="YYYY-MM-DD"
+          placeholderTextColor="#888"
         />
       </View>
 
@@ -104,7 +122,6 @@ const Ticket = () => {
           <Picker.Item label="Selecionar..." value="" />
           <Picker.Item label="Classificação 1" value="classification1" />
           <Picker.Item label="Classificação 2" value="classification2" />
-          {/* Adicione mais opções conforme necessário */}
         </Picker>
       </View>
 
@@ -119,7 +136,6 @@ const Ticket = () => {
           <Picker.Item label="Baixa" value="low" />
           <Picker.Item label="Média" value="medium" />
           <Picker.Item label="Alta" value="high" />
-          {/* Adicione mais opções conforme necessário */}
         </Picker>
       </View>
 
@@ -134,7 +150,6 @@ const Ticket = () => {
           <Picker.Item label="Aberto" value="open" />
           <Picker.Item label="Em Progresso" value="in_progress" />
           <Picker.Item label="Fechado" value="closed" />
-          {/* Adicione mais opções conforme necessário */}
         </Picker>
       </View>
 
@@ -145,7 +160,10 @@ const Ticket = () => {
           value={ticket.solution}
           onChangeText={(text) => handleChange('solution', text)}
           placeholder="Digite a solução"
+          placeholderTextColor="#888"
           multiline
+          numberOfLines={4}
+          textAlignVertical="top"
         />
       </View>
 
@@ -156,6 +174,7 @@ const Ticket = () => {
           value={ticket.ticketOwnerId}
           onChangeText={(text) => handleChange('ticketOwnerId', text)}
           placeholder="Digite o ID do proprietário do ticket"
+          placeholderTextColor="#888"
         />
       </View>
 
@@ -166,11 +185,14 @@ const Ticket = () => {
           value={ticket.customerId}
           onChangeText={(text) => handleChange('customerId', text)}
           placeholder="Digite o ID do cliente"
+          placeholderTextColor="#888"
         />
       </View>
 
       <View style={styles.inputContainer}>
-        <Button title="Selecionar Arquivos" onPress={handleFilePick} />
+        <TouchableOpacity style={styles.button} onPress={handleFilePick}>
+          <Text style={styles.buttonText}>Selecionar Arquivos</Text>
+        </TouchableOpacity>
         {ticket.files.length > 0 && (
           <Text style={styles.fileInfo}>
             Arquivos Selecionados: {ticket.files.map(file => file.name).join(', ')}
@@ -178,7 +200,11 @@ const Ticket = () => {
         )}
       </View>
 
-      <Button title="Cadastrar" onPress={handleCadastro} />
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity style={styles.cadastrarButton} onPress={handleCadastro}>
+          <Text style={styles.cadastrarButtonText}>Cadastrar</Text>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };
@@ -188,36 +214,77 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 20,
     justifyContent: 'center',
+    backgroundColor: theme.colors.background,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
+    color: theme.colors.primary,
     marginBottom: 20,
   },
   inputContainer: {
-    marginBottom: 15,
+    marginBottom: 20,
   },
   label: {
-    fontSize: 16,
+    fontSize: 14,
     marginBottom: 5,
+    color: theme.colors.text,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    borderColor: '#555',
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    color: theme.colors.text,
+    backgroundColor: '#1c1c1c',
+  },
+  textArea: {
+    minHeight: 100,
+    textAlignVertical: 'top',
   },
   picker: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
+    borderColor: '#555',
+    borderRadius: 8,
+    color: theme.colors.text,
+    backgroundColor: '#1c1c1c',
+    paddingVertical: 10,
   },
   fileInfo: {
     marginTop: 10,
     fontSize: 14,
-    color: '#333',
+    color: '#888',
+  },
+  button: {
+    backgroundColor: theme.colors.primary,
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: theme.colors.text,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  buttonsContainer: {
+    marginVertical: 10, // Reduzido de 20 para 10
+  },
+  cadastrarButton: {
+    backgroundColor: theme.colors.primary,
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cadastrarButtonText: {
+    color: theme.colors.text,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

@@ -8,31 +8,46 @@ import { DetailsScreen, HomeScreen } from '../screens/HomeScreen';
 import { NotificationsScreen } from '../screens/NotificationsScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
+import Ticket from './../screens/Ticket';
+import { theme } from './theme';
+import { CommonActions } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
-// Opções padrão de cabeçalho para telas com seta de voltar
+
 const defaultScreenOptions = ({ navigation }) => ({
   headerLeft: () => (
     <TouchableOpacity onPress={() => navigation.goBack()}>
-      <Icon name="arrow-back" size={25} style={{ marginLeft: 10 }} />
+      <Icon name="arrow-back" size={25} color={theme.colors.text} style={{ marginLeft: 10 }} />
     </TouchableOpacity>
   ),
+  headerStyle: {
+    backgroundColor: theme.colors.card,
+  },
+  headerTintColor: theme.colors.text,
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
 });
 
-// Opções de cabeçalho para a tela HomeMain com menu hambúrguer e sem título
+
 const homeMainOptions = ({ navigation }) => ({
   headerLeft: () => (
     <TouchableOpacity onPress={() => navigation.openDrawer()}>
-      <Icon name="menu" size={25} style={{ marginLeft: 10 }} />
+      <Icon name="menu" size={25} color="#ffffff" style={{ marginLeft: 10 }} />
     </TouchableOpacity>
   ),
-  headerTitle: '', // Define um título vazio para remover "HomeMain"
+  headerTitle: '', 
 });
 
 export function HomeStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: theme.colors.headerHomeBackground,
+      },
+    }}>
       <Stack.Screen
         name="HomeMain"
         component={HomeScreen}
@@ -80,7 +95,7 @@ export function NotificationsStack() {
       <Stack.Screen 
         name="NotificationsMain" 
         component={NotificationsScreen} 
-        options={{ headerTitle: 'Notifications' }} // Define o título explicitamente
+        options={{ headerTitle: 'Notifications' }}
       />
     </Stack.Navigator>
   );
@@ -105,6 +120,18 @@ export function ContactStack() {
         name="ContactMain" 
         component={ContactScreen} 
         options={{ headerTitle: 'Contact' }} // Define o título explicitamente
+      />
+    </Stack.Navigator>
+  );
+}
+
+export function TicketStack() {
+  return (
+    <Stack.Navigator screenOptions={defaultScreenOptions}>
+      <Stack.Screen 
+        name="TicketMain" 
+        component={Ticket} 
+        options={{ headerTitle: 'Ticket' }} // Define o título explicitamente
       />
     </Stack.Navigator>
   );
