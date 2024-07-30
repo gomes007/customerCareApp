@@ -1,13 +1,14 @@
 export const theme = {
-    dark: true,
-    colors: {
-      primary: '#ff7f50', 
-      background: '#2c2c2c', 
-      card: '#1c1c1c', 
-      text: '#ffffff', 
-      border: '#3f3f3f', 
-      notification: '#ff4500',
-      headerHomeBackground: '#444444',
-    },
-  };
+  dark: false,
+  colors: {
+    primary: '#d60b52',
+    background: '#E5E5E5',
+    card: '#FFFFFF',
+    text: '#4A4A4A',
+    border: '#D1D1D1',
+    notification: '#E94E77',
+    headerHomeBackground: '#d60b52',
+  },
+};
+
   

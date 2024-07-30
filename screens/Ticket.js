@@ -20,15 +20,7 @@ const Ticket = () => {
     files: [],
   });
 
-  const [openOpeningDatePicker, setOpenOpeningDatePicker] = useState(false);
-  const [openDueDatePicker, setOpenDueDatePicker] = useState(false);
 
-  const handleDateChange = (field, selectedDate) => {
-    setTicket(prevState => ({
-      ...prevState,
-      [field]: selectedDate,
-    }));
-  };
 
   const handleChange = (name, value) => {
     setTicket({ ...ticket, [name]: value });
@@ -51,8 +43,6 @@ const Ticket = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Cadastro de Ticket</Text>
-
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Nome do Contato</Text>
         <TextInput
@@ -233,12 +223,12 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#555',
+    borderColor: theme.colors.border,
     borderRadius: 8,
     paddingHorizontal: 15,
     paddingVertical: 10,
     color: theme.colors.text,
-    backgroundColor: '#1c1c1c',
+    backgroundColor: theme.colors.card,
   },
   textArea: {
     minHeight: 100,
@@ -246,10 +236,10 @@ const styles = StyleSheet.create({
   },
   picker: {
     borderWidth: 1,
-    borderColor: '#555',
+    borderColor: theme.colors.border,
     borderRadius: 8,
     color: theme.colors.text,
-    backgroundColor: '#1c1c1c',
+    backgroundColor: theme.colors.card,
     paddingVertical: 10,
   },
   fileInfo: {
@@ -266,12 +256,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonText: {
-    color: theme.colors.text,
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },
   buttonsContainer: {
-    marginVertical: 10, // Reduzido de 20 para 10
+    marginVertical: 10,
   },
   cadastrarButton: {
     backgroundColor: theme.colors.primary,
@@ -282,10 +272,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cadastrarButtonText: {
-    color: theme.colors.text,
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },
 });
+
 
 export default Ticket;
