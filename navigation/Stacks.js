@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AboutScreen } from '../screens/AboutScreen';
 import { ContactScreen } from '../screens/ContactScreen';
@@ -10,7 +10,7 @@ import { ProfileScreen } from '../screens/ProfileScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import Ticket from './../screens/Ticket';
 import { theme } from './theme';
-import { CommonActions } from '@react-navigation/native';
+
 
 const Stack = createStackNavigator();
 
@@ -103,6 +103,7 @@ export function NotificationsStack() {
 
 export function AboutStack() {
   return (
+    
     <Stack.Navigator screenOptions={defaultScreenOptions}>
       <Stack.Screen 
         name="AboutMain" 
@@ -110,6 +111,7 @@ export function AboutStack() {
         options={{ headerTitle: 'About' }} // Define o título explicitamente
       />
     </Stack.Navigator>
+    
   );
 }
 

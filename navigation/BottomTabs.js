@@ -2,7 +2,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { HomeStack, ProfileStack, SettingsStack } from './Stacks';
-import { theme } from './theme'; // Importa o tema
+import { theme } from './theme';
+
 
 const Tab = createBottomTabNavigator();
 

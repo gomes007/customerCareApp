@@ -1,16 +1,10 @@
-import * as React from 'react';
-import { TextInput } from 'react-native-paper';
+import React, { useState } from 'react';
+import DatePicker from 'react-native-date-picker';
 
 const MyComponent = () => {
-  const [text, setText] = React.useState("");
+  const [date, setDate] = useState(new Date())
 
-  return (
-    <TextInput
-      label="Email"
-      value={text}
-      onChangeText={text => setText(text)}
-    />
-  );
+  return <DatePicker date={date} onDateChange={setDate} />
 };
 
 export default MyComponent;

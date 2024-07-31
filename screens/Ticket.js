@@ -1,7 +1,7 @@
 import { Picker } from '@react-native-picker/picker';
 import * as DocumentPicker from 'expo-document-picker';
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { theme } from '../navigation/theme';
 
 const Ticket = () => {
@@ -43,6 +43,7 @@ const Ticket = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <SafeAreaView>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Nome do Contato</Text>
         <TextInput
@@ -195,6 +196,7 @@ const Ticket = () => {
           <Text style={styles.cadastrarButtonText}>Cadastrar</Text>
         </TouchableOpacity>
       </View>
+      </SafeAreaView>
     </ScrollView>
   );
 };
